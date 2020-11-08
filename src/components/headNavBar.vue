@@ -1,20 +1,20 @@
 <template>
-  <div>
+  <div style="background-color:#aaa">
     <div class="header">
       <div>学行天下游学平台</div>
       <!-- 头部右边列表 -->
       <div id="header-contentRight">
         <ul>
-          遍历 options 中的内容，显示在右边
-          <li v-for="item in options" :key="item">
+          <!-- 遍历 options 中的内容，显示在右边 -->
+          <li v-for="item in options" :key="item" style="padding: 0 0.4em">
             {{ item }}
           </li>
         </ul>
       </div>
     </div>
-    <el-carousel height="150px">
+    <el-carousel height="37em" :interval="5000">
       <el-carousel-item v-for="item in imgList" :key="item.id">
-        <el-image class="small" :src="item.photo"></el-image>
+        <el-image :src="item.photo" fit="contain" style="width:100%;height:37em"></el-image>
       </el-carousel-item>
     </el-carousel>
   </div>
@@ -69,9 +69,9 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .header {
-  background-color: #77777766;
+  background-color: #4d4d4d93;
   width: 100%;
   height: 50px;
   display: flex;
@@ -83,6 +83,9 @@ export default {
   font-weight: bold;
   filter: blur(0.3);
   box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  z-index: 20;
 }
 #header-contentRight > ul {
   display: flex;
@@ -90,7 +93,6 @@ export default {
   align-items: center;
 }
 #header-contentRight > ul > li {
-  /* width: 50px; */
   list-style-type: none;
   transition: all 0.2s;
   text-align: center;
@@ -105,38 +107,5 @@ export default {
 #header-contentRight > ul > li > i {
   font-weight: 100;
   width: 50px;
-}
-input {
-  height: 40px;
-  margin: auto 0;
-  outline: none;
-  border: 1px solid #ccc;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  padding-left: 10px;
-}
-.search-wrapper {
-  display: flex;
-  justify-content: space-around;
-}
-.slide-in-enter-active {
-  transition: all 0.5s;
-  transform-origin: right;
-}
-.slide-in-enter {
-  transform: scaleX(0);
-}
-.avatar-wrapper {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-/* .slide-in-leave{
-    width: 200px;
-} */
-@media screen and (min-width: 180px) and (max-width: 500px) {
-  .header {
-    position: absolute;
-  }
 }
 </style>
