@@ -62,10 +62,11 @@
             <div
               class="conetnt-btn"
               style="background-color: rgb(33, 126, 163); margin-right: 1em"
+              @click="showMore(item)"
             >
               了解更多
             </div>
-            <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)">
+            <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)" @click="signUp(item)">
               我要预约
             </div>
           </div>
@@ -176,7 +177,7 @@
         <div class="form-wrapper">
           <el-form label-position="top" label-width="6em" :model="form">
             <el-form-item>
-              <el-input v-model="form.name" placeholder="您的姓名"></el-input>
+              <el-input v-model="form.realname" placeholder="您的姓名"></el-input>
             </el-form-item>
             <el-form-item>
               <el-input v-model="form.telephone" placeholder="您的联系方式"></el-input>
@@ -186,11 +187,11 @@
                 type="textarea"
                 :autosize="{ minRows: 6, maxRows: 12}"
                 placeholder="您想和我们说些什么"
-                v-model="form.comment">
+                v-model="comment">
               </el-input>
             </el-form-item>
           </el-form>
-          <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)">
+          <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)" @click="submit">
               提交
           </div>
         </div>
@@ -202,50 +203,14 @@
         </div>
       </div>
     </div>
-    <!-- 页脚 -->
-    <div class="footer">
-      <ul>
-        <li>研学天下</li>
-        <li>
-          <ul>
-            <li>LINKS</li>
-            <li class="subLi">关于我们</li>
-            <li class="subLi">项目介绍</li>
-            <li class="subLi">学生风采</li>
-            <li class="subLi">游学流程</li>
-            <li class="subLi">联系我们</li>
-          </ul>
-        </li>
-        <li>
-          <ul>
-            <li>COURSE</li>
-            <li class="subLi">青少年英语拓展课程（适合10-13岁）</li>
-            <li class="subLi">青少年英语领先课程（适合14-18岁）</li>
-            <li class="subLi">成人英语培训</li>
-            <li class="subLi">出国留学</li>
-            <li class="subLi">企业英语培训</li>
-          </ul>
-        </li>
-        <li>
-          <ul>
-            <li>CONTACT-INFO</li>
-            <li class="subLi" style="color:#eee">Phone</li>
-            <li class="subLi">1234-12345678</li>
-            <li class="subLi" style="color:#eee">Email</li>
-            <li class="subLi">aEmailDontExist@abaaba.com</li>
-            <li class="subLi" style="color:#eee">Address</li>
-            <li class="subLi">个人的软件园！</li>
-          </ul>
-        </li>
-      </ul>
-      <p style="color:#eee;text-align:center;font-size:.2em">Copyright © 2020.Company name All rights reserved - Collect from 候泽空</p>
-    </div>
+    <cusFooter></cusFooter>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import headNavBar from "@/components/headNavBar.vue";
+import cusFooter from "@/components/footer.vue";
 import { mapActions } from "vuex";
 import { mapState } from "vuex";
 
@@ -254,8 +219,9 @@ export default {
   data(){
     return {
       form: {
-        name: '',telephone: '',comment: ''
-      }
+        name: '',telephone: ''
+      },
+      comment: ''
     }
   },
   computed: {
@@ -283,21 +249,28 @@ export default {
     },
     // 项目部分的项目数组
     projectsArr() {
-      console.log(
-        this.projects9411.filter((ele) => {
-          return ele.status == "正常";
-        })
-      );
       return this.projects9411.filter((ele) => {
         return ele.status == "正常";
       });
-    },
+    }
   },
   components: {
-    headNavBar,
+    headNavBar,cusFooter
   },
   methods: {
-    ...mapActions("projectManage", ["queryProject"]),
+    ...mapActions("projectManage", ["queryProject",'updateComment']),
+    // 点击了解更多按钮的事件
+    showMore(i){
+      this.$router.push({ name: 'ShowMore',  params:{ project:i } })
+    },
+    // 点击我要报名按钮的事件
+    signUp(i){
+      this.$router.push({ name: 'SignUp',  params:{ project:i } })
+    },
+    // 处理联系我们按钮事件
+    submit(){
+      this.updateComment({ cus:this.form, content: this.comment })
+    }
   },
   created() {
     this.queryProject(9441);
@@ -311,8 +284,8 @@ export default {
 </script>
 <style>
 .content-wrapper {
-  width: 80%;
-  min-width: 1225px;
+  width: 70%;
+  min-width: 1200px;
   margin: 0 auto;
   padding: 5em 0;
 }
@@ -386,32 +359,5 @@ export default {
 }
 .el-input{
   width: 40em;
-}
-.footer{
-  background-color: #222;
-  padding: 2em 3em;
-}
-.footer>ul{
-  width: 80%;
-  min-width: 1225px;
-  margin: 0 auto;
-  padding: 5em 0;
-  display: flex;
-  justify-content: space-around;
-}
-.footer>ul>li{
-  font-size: 1.2em;
-  color: #eee;
-  font-weight: bold;
-}
-.footer li{
-  list-style-type: none;
-  margin-bottom: .5em 0;
-}
-.subLi{
-  font-size: .3em;
-  font-weight: 400;
-  color: #666;
-  padding-top: 3em;
 }
 </style>

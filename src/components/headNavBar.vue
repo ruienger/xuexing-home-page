@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color:#aaa">
+  <div style="background-color: #aaa">
     <div class="header">
       <div>学行天下游学平台</div>
       <!-- 头部右边列表 -->
@@ -12,11 +12,25 @@
         </ul>
       </div>
     </div>
-    <el-carousel height="37em" :interval="5000">
+    <el-carousel
+      :height="customerHeight"
+      :interval="5000"
+      v-if="imgList.length > 1"
+    >
       <el-carousel-item v-for="item in imgList" :key="item.id">
-        <el-image :src="item.photo" fit="contain" style="width:100%;height:37em"></el-image>
+        <el-image
+          :src="item.photo"
+          fit="contain"
+          :style="'width:' + customerWidth + ';height:' + customerHeight"
+        ></el-image>
       </el-carousel-item>
     </el-carousel>
+    <el-image
+      v-if="imgList.length == 1"
+      :src="imgList[0].photo"
+      fit="contain"
+      :style="'width:' + customerWidth + ';height:' + customerHeight +';margin: 0 auto'"
+    ></el-image>
   </div>
 </template>
 <script>
@@ -30,6 +44,16 @@ export default {
     options: Array,
     // 轮播图列表数组
     imgList: Array,
+    height: String,
+    width: String,
+  },
+  computed: {
+    customerHeight() {
+      return this.height ? this.height : "37em";
+    },
+    customerWidth() {
+      return this.width ? this.width : "100%";
+    },
   },
   data() {
     return {

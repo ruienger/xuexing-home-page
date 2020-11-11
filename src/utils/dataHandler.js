@@ -18,7 +18,6 @@ function saveOrUpdate(url, data, callback) {
     data: qs.stringify(data)
   }).then((result) => {
     // 成功接收响应，弹出提示并将响应返回
-    alert(result.message)
     callback(result.data)
   })
 }
