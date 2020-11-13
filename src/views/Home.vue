@@ -12,6 +12,7 @@
         '联系我们',
       ]"
       :imgList="imgList"
+      @headerClicked="scroll2Loc($event)"
     ></headNavBar>
     <!-- 关于我们 -->
     <div class="content-wrapper">
@@ -32,7 +33,7 @@
           <h5 style="color: rgb(187, 70, 70)">关于我们</h5>
           <div><h2 v-html="title" style="font-weight: 500"></h2></div>
           <div><p v-html="desc"></p></div>
-          <div class="conetnt-btn">联系我们</div>
+          <div class="conetnt-btn" @click="scroll2Loc(7)">联系我们</div>
         </div>
       </div>
     </div>
@@ -203,7 +204,7 @@
         </div>
       </div>
     </div>
-    <cusFooter></cusFooter>
+    <cusFooter @linkClicked="scroll2Loc($event)"></cusFooter>
   </div>
 </template>
 
@@ -221,7 +222,10 @@ export default {
       form: {
         name: '',telephone: ''
       },
-      comment: ''
+      comment: '',
+      isMoving: false,
+      backPosition: 0,
+      interval: null
     }
   },
   computed: {
@@ -270,6 +274,37 @@ export default {
     // 处理联系我们按钮事件
     submit(){
       this.updateComment({ cus:this.form, content: this.comment })
+    },
+    // 处理滚动到哪里的事件
+    scroll2Loc(loc) {
+      // 判断loc的名称
+      this.backPosition = loc*750 -210
+      if (this.isMoving) return
+      // 获取页面距离顶部的距离
+      const start = window.pageYOffset
+      let i = 0
+      this.isMoving = true
+      // 开始移动 每 16.4 ms 执行一次滚动
+      this.interval = setInterval(() => {
+        // 二次缓入函数，参数分别是 当前时间，开始位置，总移动距离，动画时长
+        // 这里开始位置 从当前位置开始，在 2 秒 内移动到 顶部 时对应的 y 轴坐标
+        const next = Math.floor(this.easeInOutQuad(10 * i, start, this.backPosition - start, 200))
+        // 如果当前 y 轴 小于 要返回到的位置
+        if (next == this.backPosition) {
+          // 直接返回到目的地 并 停止计时
+          window.scrollTo(0, this.backPosition)
+          clearInterval(this.interval)
+          this.isMoving = false
+        } else {
+          // 否则还没有到 目的地，向下一步滚动
+          window.scrollTo(0, next)
+        }
+        i++
+      }, 16.4)
+    },
+    easeInOutQuad(t, b, c, d) {
+      if ((t /= d / 2) < 1) return c / 2 * t * t + b
+      return -c / 2 * (--t * (t - 2) - 1) + b
     }
   },
   created() {
@@ -285,9 +320,11 @@ export default {
 <style>
 .content-wrapper {
   width: 70%;
+  height: 750px;
   min-width: 1200px;
   margin: 0 auto;
   padding: 5em 0;
+  box-sizing: border-box;
 }
 .content-wrapper:nth-child(odd) {
   background-color: #eee;

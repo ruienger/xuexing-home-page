@@ -141,7 +141,7 @@ const actions = {
                   isOrigin: true
                 }, (address, isOrigin) => {
                   // 拿到地址之后获取 id，将 地址 id 和 用户 id 与 project 一并新建一个订单
-                  saveOrder(cus.id, address.id, content, project, (m) => {
+                  saveOrder(cus.id, address.id,  project,content, (m) => {
                     MessageBox.alert(m, '提示')
                   })
                 })
@@ -171,7 +171,7 @@ const actions = {
                     add.area = address.area
                     add.address = address.address
                     saveOrUpdate('address/saveOrUpdate', add, (res) => {
-                      saveOrder(cus.id, add.id, content, project, (m) => {
+                      saveOrder(cus.id, add.id, project, content, (m) => {
                         MessageBox.alert(m, '提示')
                       })
                     })
@@ -196,7 +196,7 @@ const actions = {
           isOrigin: true
         }, (address, isOrigin) => {
           // 拿到地址之后获取 id，将 地址 id 和 用户 id 与 project 一并新建一个订单
-          saveOrder(cus.id, address.id, content, project, (m) => {
+          saveOrder(cus.id, address.id, project, content, (m) => {
             MessageBox.alert(m, '提示')
           })
         })
@@ -380,12 +380,15 @@ function saveOrder(cusId, addId, project, content, callback) {
         get: true,
         isOrigin: true
       }, (res) => {
+        console.log(cusId)
+        console.log(content)
+        console.log(res)
         saveOrUpdate('comment/saveOrUpdate', {
-          orderId: res.id,
+          orderId: res.orderId,
           cusId,
           content
         }, (res) => {
-          console.log(res)
+          // console.log(res)
           callback('报名成功')
         })
 

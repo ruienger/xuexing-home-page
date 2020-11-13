@@ -6,11 +6,11 @@
         <li>
           <ul>
             <li>LINKS</li>
-            <li class="subLi">关于我们</li>
-            <li class="subLi">项目介绍</li>
-            <li class="subLi">学生风采</li>
-            <li class="subLi">游学流程</li>
-            <li class="subLi">联系我们</li>
+            <li class="subLi" @click="handleClick(1)">关于我们</li>
+            <li class="subLi" @click="handleClick(2)">项目介绍</li>
+            <li class="subLi" @click="handleClick(5)">学生风采</li>
+            <li class="subLi" @click="handleClick(6)">游学流程</li>
+            <li class="subLi" @click="handleClick(7)">联系我们</li>
           </ul>
         </li>
         <li>
@@ -41,7 +41,11 @@
 
 <script>
 export default {
-
+  methods:{
+    handleClick(loc){
+      this.$emit('linkClickded',loc)
+    }
+  }
 }
 </script>
 

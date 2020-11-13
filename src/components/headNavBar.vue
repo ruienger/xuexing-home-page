@@ -6,7 +6,7 @@
       <div id="header-contentRight">
         <ul>
           <!-- 遍历 options 中的内容，显示在右边 -->
-          <li v-for="item in options" :key="item" style="padding: 0 0.4em">
+          <li v-for="item in options" :key="item" style="padding: 0 0.4em" @click="handleClick(item)">
             {{ item }}
           </li>
         </ul>
@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     customerHeight() {
-      return this.height ? this.height : "37em";
+      return this.height ? this.height : "580px";
     },
     customerWidth() {
       return this.width ? this.width : "100%";
@@ -90,6 +90,9 @@ export default {
         this.isShown = !this.isShown;
       }
     },
+    handleClick(item){
+      this.$emit('headerClicked',this.options.indexOf(item))
+    }
   },
 };
 </script>
