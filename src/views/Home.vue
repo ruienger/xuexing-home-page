@@ -30,7 +30,7 @@
             flex-direction: column;
           "
         >
-          <h5 style="color: rgb(187, 70, 70)">关于我们</h5>
+          <h4 style="color: rgb(187, 70, 70)">关于我们</h4>
           <div><h2 v-html="title" style="font-weight: 500"></h2></div>
           <div><p v-html="desc"></p></div>
           <div class="conetnt-btn" @click="scroll2Loc(7)">联系我们</div>
@@ -60,7 +60,7 @@
           <div><p v-html="item.description"></p></div>
           <div>
             <p>
-              目的地: <span style="color: #888">{{ item.photo.area }}</span>
+              目的地: <span style="color: #888">{{ item.photo.area[0]+' '+item.photo.area[1] }}</span>
             </p>
           </div>
           <div style="display: flex">
@@ -109,12 +109,14 @@
       <div
         class="QA-wrapper"
         v-for="item in projects9440.filter((e) => {
-          return (e.status = '正常');
+          return e.status == '正常'
         })"
         :key="item.id"
       >
         <p>Q. {{ item.name }}</p>
         <p>{{ item.description }}</p>
+        <br>
+        <br>
       </div>
     </div>
     <!-- 学生风采 9414-->
@@ -449,7 +451,7 @@ export default {
   font-weight: bold;
 }
 .student-wrapper {
-  height: 15em;
+  height: 21em;
   width: 10em;
   border-radius: 1em;
   overflow: hidden;

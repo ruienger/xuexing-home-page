@@ -29,7 +29,7 @@
         >
           <h2>{{ project.name }}</h2>
           <h3 style="color: rgb(187, 70, 70)">
-            {{ project.photo ? project.photo.area : "暂无信息" }}
+            {{ project.photo ? project.photo.area[0]+' '+project.photo.area[1] : "暂无信息" }}
           </h3>
           <div><h3 style="font-weight: 200">详情请参考下方项目介绍</h3></div>
           <div>

@@ -72,7 +72,7 @@ export default {
 </script>
 <style>
 .header {
-  background-color: #4d4d4d93;
+  background-color: #4d4d4dc5;
   width: 100%;
   height: 50px;
   display: flex;

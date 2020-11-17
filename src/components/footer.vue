@@ -26,12 +26,12 @@
         <li>
           <ul>
             <li>CONTACT-INFO</li>
-            <li class="subLi" style="color:#eee">Phone</li>
-            <li class="subLi">1234-12345678</li>
-            <li class="subLi" style="color:#eee">Email</li>
-            <li class="subLi">aEmailDontExist@abaaba.com</li>
-            <li class="subLi" style="color:#eee">Address</li>
-            <li class="subLi">个人的软件园！</li>
+            <li class="subLi" style="color:#eee">手机</li>
+            <li class="subLi">178-3571-3022</li>
+            <li class="subLi" style="color:#eee">邮箱</li>
+            <li class="subLi">1464852103@qq.com</li>
+            <li class="subLi" style="color:#eee">地址</li>
+            <li class="subLi">苏州市昆山市祖冲之路杰普软件园</li>
           </ul>
         </li>
       </ul>

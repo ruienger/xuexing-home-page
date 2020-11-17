@@ -4,7 +4,7 @@
       :options="[]"
       :imgList="[
         {
-          img:
+          photo:
             'http://39.106.16.56/huangyy/youxue/images/%E9%A1%B9%E7%9B%AE%E8%AF%A6%E6%83%85/u179.jpg',
         },
       ]"
@@ -65,7 +65,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">立即报名</el-button>
-          <el-button>取消</el-button>
+          <el-button @click="$router.push({ name: 'Home' })">取消</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -131,13 +131,14 @@ export default {
   },
   methods: {
     ...mapActions('projectManage',['updateProject']),
-    onSubmit(){
+    async onSubmit(){
       this.address.province = this.customer.province
       this.address.city = this.customer.city
       this.address.area = this.customer.area
       this.address.address = this.customer.address
       this.address.telephone = this.customer.telephone
-      this.updateProject({ customer:this.customer, project:this.project, address:this.address, content:this.content })
+      await this.updateProject({ customer:this.customer, project:this.project, address:this.address, content:this.content })
+      this.$router.push({ name: 'Home' })
     }
   },
 };
@@ -145,8 +146,11 @@ export default {
 
 <style scoped>
 .sign-up-wrapper {
-  width: 74%;
+  width: 72%;
   padding: 1.5em 0.7em;
   box-shadow: 1px solid orchid;
+}
+.content-wrapper{
+  height: auto;
 }
 </style>

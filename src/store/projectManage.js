@@ -82,8 +82,11 @@ const actions = {
     }, (res) => {
       if (id == 9411) {
         res.forEach(element => {
-          if (JSON.parse(element.photo)) {
-            element.photo = JSON.parse(element.photo)
+          console.log(element)
+          if(element.photo){
+            if (JSON.parse(element.photo)) {
+              element.photo = JSON.parse(element.photo)
+            }
           }
         });
       }
@@ -390,11 +393,12 @@ function saveOrder(cusId, addId, project, content, callback) {
         }, (res) => {
           // console.log(res)
           callback('报名成功')
+          this.$router.push('/')
         })
 
       })
     } else {
-      callback('您已经在该游学计划中报名过了，请等待工作人员联系')
+      callback('您已经报名过游学计划了，请等待工作人员联系')
     }
   })
 }
