@@ -20,7 +20,7 @@
       <el-carousel-item v-for="item in imgList" :key="item.id">
         <el-image
           :src="item.photo"
-          fit="contain"
+          fit="cover"
           :style="'width:' + customerWidth + ';height:' + customerHeight"
         ></el-image>
       </el-carousel-item>
@@ -28,7 +28,7 @@
     <el-image
       v-if="imgList.length == 1"
       :src="imgList[0].photo"
-      fit="contain"
+      fit="cover"
       :style="'width:' + customerWidth + ';height:' + customerHeight +';margin: 0 auto'"
     ></el-image>
   </div>
@@ -64,32 +64,6 @@ export default {
     };
   },
   methods: {
-    showSearchBar() {
-      if (!this.isShown) {
-        this.isShown = !this.isShown;
-        switch (this.title) {
-          case "用户":
-            alert("满共就没几条信息你隔着搜啥呢");
-            this.isShown = !this.isShown;
-            break;
-          case "主页":
-            this.placeholder = "输入完整城市名";
-            break;
-          case "备忘录":
-            alert("满共就没几条信息你隔着搜啥呢");
-            this.isShown = false;
-            break;
-          case "日历":
-            this.placeholder = "输入日期";
-            break;
-        }
-      } else {
-        if (this.searchInfo) {
-          this.$emit("search-clicked", this.searchInfo);
-        }
-        this.isShown = !this.isShown;
-      }
-    },
     handleClick(item){
       this.$emit('headerClicked',this.options.indexOf(item))
     }

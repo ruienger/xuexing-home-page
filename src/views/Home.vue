@@ -14,7 +14,7 @@
       :imgList="imgList"
       @headerClicked="scroll2Loc($event)"
     ></headNavBar>
-    <!-- 关于我们 -->
+    <!-- 关于我们 9425-->
     <div class="content-wrapper">
       <div class="detail-wrapper">
         <div>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <!-- 项目介绍 -->
+    <!-- 项目介绍 9441-->
     <div class="content-wrapper">
       <div class="content-title">
         <h2>项目介绍</h2>
@@ -46,7 +46,11 @@
         </p>
       </div>
       <div class="detail-wrapper">
-        <div v-for="item in projectsArr" :key="item.id" class="project-wrapper">
+        <div
+          v-for="item in projectsArr.slice(0, 3)"
+          :key="item.id"
+          class="project-wrapper"
+        >
           <el-image
             :src="item.photo.img || '404'"
             style="width: 22em; height: 16em"
@@ -67,20 +71,34 @@
             >
               了解更多
             </div>
-            <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)" @click="signUp(item)">
+            <div
+              class="conetnt-btn"
+              style="background-color: rgb(255, 78, 76)"
+              @click="signUp(item)"
+            >
               我要预约
             </div>
           </div>
         </div>
       </div>
+      <h4 style="text-align:center;padding:15px 0" @click="dialogVisible = true">查看更多</h4>
     </div>
-    <!-- 精彩瞬间 -->
+    <!-- 精彩瞬间 9432-->
     <div class="content-wrapper">
       <div class="content-title">
         <h2>精彩瞬间</h2>
         <p>幽默、分享、交际、协作、沟通</p>
       </div>
-      <div class="detail-wrapper"></div>
+      <div class="detail-wrapper">
+        <el-row :gutter="1">
+          <el-col :span="5" v-for="item in projects9432.filter(e=>{return e.status='正常'})" :key="item.id">
+            <el-image :src="item.photo" alt="加载失败" style="width:100%;height:100%"></el-image>
+          </el-col>
+        </el-row>
+        <div>
+          
+        </div>
+      </div>
     </div>
     <!-- 常见问题 9440 -->
     <div class="content-wrapper">
@@ -88,7 +106,13 @@
         <h2>常见问题</h2>
         <p>Question &amp; Answer</p>
       </div>
-      <div class="QA-wrapper" v-for="item in projects9440" :key="item.id">
+      <div
+        class="QA-wrapper"
+        v-for="item in projects9440.filter((e) => {
+          return (e.status = '正常');
+        })"
+        :key="item.id"
+      >
         <p>Q. {{ item.name }}</p>
         <p>{{ item.description }}</p>
       </div>
@@ -178,22 +202,33 @@
         <div class="form-wrapper">
           <el-form label-position="top" label-width="6em" :model="form">
             <el-form-item>
-              <el-input v-model="form.realname" placeholder="您的姓名"></el-input>
+              <el-input
+                v-model="form.realname"
+                placeholder="您的姓名"
+              ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-input v-model="form.telephone" placeholder="您的联系方式"></el-input>
+              <el-input
+                v-model="form.telephone"
+                placeholder="您的联系方式"
+              ></el-input>
             </el-form-item>
             <el-form-item>
               <el-input
                 type="textarea"
-                :autosize="{ minRows: 6, maxRows: 12}"
+                :autosize="{ minRows: 6, maxRows: 12 }"
                 placeholder="您想和我们说些什么"
-                v-model="comment">
+                v-model="comment"
+              >
               </el-input>
             </el-form-item>
           </el-form>
-          <div class="conetnt-btn" style="background-color: rgb(255, 78, 76)" @click="submit">
-              提交
+          <div
+            class="conetnt-btn"
+            style="background-color: rgb(255, 78, 76)"
+            @click="submit"
+          >
+            提交
           </div>
         </div>
         <div>
@@ -204,7 +239,48 @@
         </div>
       </div>
     </div>
-    <cusFooter @linkClicked="scroll2Loc($event)"></cusFooter>
+    <cusFooter @linkClickded="scroll2Loc($event)"></cusFooter>
+    <!-- 项目详情对应的 模态框 -->
+         
+    <el-dialog :visible.sync="dialogVisible" width="90%" title="所有可报名项目">
+      <el-row :gutter="1">
+        <el-col
+          :span="7"
+          v-for="item in projectsArr"
+          :key="item.id"
+          class="project-wrapper"
+        >
+          <el-image
+            :src="item.photo.img || '404'"
+            style="width: 22em; height: 16em"
+          ></el-image>
+          <div><h3 v-html="item.name"></h3></div>
+          <div><h4>适合 18+ 周岁, 游学行程 3 个月</h4></div>
+          <div><p v-html="item.description"></p></div>
+          <div>
+            <p>
+              目的地: <span style="color: #888">{{ item.photo.area }}</span>
+            </p>
+          </div>
+          <div style="display: flex">
+            <div
+              class="conetnt-btn"
+              style="background-color: rgb(33, 126, 163); margin-right: 1em"
+              @click="showMore(item)"
+            >
+              了解更多
+            </div>
+            <div
+              class="conetnt-btn"
+              style="background-color: rgb(255, 78, 76)"
+              @click="signUp(item)"
+            >
+              我要预约
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -217,16 +293,18 @@ import { mapState } from "vuex";
 
 export default {
   name: "Home",
-  data(){
+  data() {
     return {
       form: {
-        name: '',telephone: ''
+        name: "",
+        telephone: "",
       },
-      comment: '',
+      comment: "",
       isMoving: false,
       backPosition: 0,
-      interval: null
-    }
+      interval: null,
+      dialogVisible: false,
+    };
   },
   computed: {
     ...mapState("projectManage", [
@@ -256,56 +334,59 @@ export default {
       return this.projects9411.filter((ele) => {
         return ele.status == "正常";
       });
-    }
+    },
   },
   components: {
-    headNavBar,cusFooter
+    headNavBar,
+    cusFooter,
   },
   methods: {
-    ...mapActions("projectManage", ["queryProject",'updateComment']),
+    ...mapActions("projectManage", ["queryProject", "updateComment"]),
     // 点击了解更多按钮的事件
-    showMore(i){
-      this.$router.push({ name: 'ShowMore',  params:{ project:i } })
+    showMore(i) {
+      this.$router.push({ name: "ShowMore", params: { project: i } });
     },
     // 点击我要报名按钮的事件
-    signUp(i){
-      this.$router.push({ name: 'SignUp',  params:{ project:i } })
+    signUp(i) {
+      this.$router.push({ name: "SignUp", params: { project: i } });
     },
     // 处理联系我们按钮事件
-    submit(){
-      this.updateComment({ cus:this.form, content: this.comment })
+    submit() {
+      this.updateComment({ cus: this.form, content: this.comment });
     },
     // 处理滚动到哪里的事件
     scroll2Loc(loc) {
       // 判断loc的名称
-      this.backPosition = loc*750 -210
-      if (this.isMoving) return
+      this.backPosition = loc * 750 - 210;
+      if (this.isMoving) return;
       // 获取页面距离顶部的距离
-      const start = window.pageYOffset
-      let i = 0
-      this.isMoving = true
+      const start = window.pageYOffset;
+      let i = 0;
+      this.isMoving = true;
       // 开始移动 每 16.4 ms 执行一次滚动
       this.interval = setInterval(() => {
         // 二次缓入函数，参数分别是 当前时间，开始位置，总移动距离，动画时长
         // 这里开始位置 从当前位置开始，在 2 秒 内移动到 顶部 时对应的 y 轴坐标
-        const next = Math.floor(this.easeInOutQuad(10 * i, start, this.backPosition - start, 200))
+        const next = Math.floor(
+          this.easeInOutQuad(10 * i, start, this.backPosition - start, 200)
+        );
         // 如果当前 y 轴 小于 要返回到的位置
         if (next == this.backPosition) {
           // 直接返回到目的地 并 停止计时
-          window.scrollTo(0, this.backPosition)
-          clearInterval(this.interval)
-          this.isMoving = false
+          window.scrollTo(0, this.backPosition);
+          clearInterval(this.interval);
+          this.isMoving = false;
         } else {
           // 否则还没有到 目的地，向下一步滚动
-          window.scrollTo(0, next)
+          window.scrollTo(0, next);
         }
-        i++
-      }, 16.4)
+        i++;
+      }, 16.4);
     },
     easeInOutQuad(t, b, c, d) {
-      if ((t /= d / 2) < 1) return c / 2 * t * t + b
-      return -c / 2 * (--t * (t - 2) - 1) + b
-    }
+      if ((t /= d / 2) < 1) return (c / 2) * t * t + b;
+      return (-c / 2) * (--t * (t - 2) - 1) + b;
+    },
   },
   created() {
     this.queryProject(9441);
@@ -351,8 +432,8 @@ export default {
   color: #fff;
   border-radius: 5px;
 }
-.conetnt-btn:hover{
-  opacity: .9;
+.conetnt-btn:hover {
+  opacity: 0.9;
   cursor: pointer;
 }
 .QA-wrapper {
@@ -374,6 +455,11 @@ export default {
   overflow: hidden;
   padding: 1em 1.5em;
   text-align: center;
+  background-color: #eee;
+  transition: all .4s;
+}
+.student-wrapper:hover{
+  box-shadow: #ccc 0px 0px 15px 5px;
 }
 .circled-img {
   width: 8em;
@@ -388,13 +474,13 @@ export default {
 .project-wrapper > div {
   margin-top: 1em;
 }
-.form-wrapper{
+.form-wrapper {
   width: 37em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.el-input{
+.el-input {
   width: 40em;
 }
 </style>
