@@ -393,7 +393,6 @@ function saveOrder(cusId, addId, project, content, callback) {
         }, (res) => {
           // console.log(res)
           callback('报名成功')
-          this.$router.push('/')
         })
 
       })
