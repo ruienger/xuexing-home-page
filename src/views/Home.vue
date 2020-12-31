@@ -23,17 +23,25 @@
             alt=""
           />
         </div>
-        <div
-          style="
+        <div style="
             display: flex;
             justify-content: space-around;
             flex-direction: column;
-          "
-        >
+          ">
           <h4 style="color: rgb(187, 70, 70)">关于我们</h4>
-          <div><h2 v-html="title" style="font-weight: 500"></h2></div>
-          <div><p v-html="desc"></p></div>
-          <div class="conetnt-btn" @click="scroll2Loc(7)">联系我们</div>
+          <div>
+            <h2
+              v-html="title"
+              style="font-weight: 500"
+            ></h2>
+          </div>
+          <div>
+            <p v-html="desc"></p>
+          </div>
+          <div
+            class="conetnt-btn"
+            @click="scroll2Loc(7)"
+          >联系我们</div>
         </div>
       </div>
     </div>
@@ -55,9 +63,15 @@
             :src="item.photo.img || '404'"
             style="width: 22em; height: 16em"
           ></el-image>
-          <div><h3 v-html="item.name"></h3></div>
-          <div><h4>适合 18+ 周岁, 游学行程 3 个月</h4></div>
-          <div><p v-html="item.description"></p></div>
+          <div>
+            <h3 v-html="item.name"></h3>
+          </div>
+          <div>
+            <h4>适合 18+ 周岁, 游学行程 3 个月</h4>
+          </div>
+          <div>
+            <p v-html="item.description"></p>
+          </div>
           <div>
             <p>
               目的地: <span style="color: #888">{{ item.photo.area[0]+' '+item.photo.area[1] }}</span>
@@ -81,7 +95,10 @@
           </div>
         </div>
       </div>
-      <h4 style="text-align:center;padding:15px 0" @click="dialogVisible = true">查看更多</h4>
+      <h4
+        style="text-align:center;padding:15px 0"
+        @click="dialogVisible = true"
+      >查看更多</h4>
     </div>
     <!-- 精彩瞬间 9432-->
     <div class="content-wrapper">
@@ -91,12 +108,21 @@
       </div>
       <div class="detail-wrapper">
         <el-row :gutter="1">
-          <el-col :span="5" v-for="item in projects9432.filter(e=>{return e.status='正常'})" :key="item.id">
-            <el-image :src="item.photo" alt="加载失败" style="width:100%;height:100%"></el-image>
+          <el-col
+            :span="5"
+            v-for="item in projects9432.filter(e=>{return e.status='正常'})"
+            :key="item.id"
+          >
+            <el-image
+              :src="item.photo"
+              alt="加载失败"
+              style="width:100%;height:100%"
+            ></el-image>
+            {{ item }}
           </el-col>
         </el-row>
         <div>
-          
+
         </div>
       </div>
     </div>
@@ -155,7 +181,10 @@
         background-image: url('http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u103.png');
       "
     >
-      <div class="content-title" style="color: #fff">
+      <div
+        class="content-title"
+        style="color: #fff"
+      >
         <h2>游学流程</h2>
         <p style="color: #fff">
           艺术陶冶、人文积累、审美培训、兴趣开发、思维锤炼
@@ -202,7 +231,11 @@
       </div>
       <div class="detail-wrapper">
         <div class="form-wrapper">
-          <el-form label-position="top" label-width="6em" :model="form">
+          <el-form
+            label-position="top"
+            label-width="6em"
+            :model="form"
+          >
             <el-form-item>
               <el-input
                 v-model="form.realname"
@@ -233,18 +266,22 @@
             提交
           </div>
         </div>
-        <div>
-          <img
+        <div id="container">
+          <!-- <img
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u125.png"
             alt=""
-          />
+          /> -->
         </div>
       </div>
     </div>
     <cusFooter @linkClickded="scroll2Loc($event)"></cusFooter>
     <!-- 项目详情对应的 模态框 -->
-         
-    <el-dialog :visible.sync="dialogVisible" width="90%" title="所有可报名项目">
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="90%"
+      title="所有可报名项目"
+    >
       <el-row :gutter="1">
         <el-col
           :span="7"
@@ -256,9 +293,15 @@
             :src="item.photo.img || '404'"
             style="width: 22em; height: 16em"
           ></el-image>
-          <div><h3 v-html="item.name"></h3></div>
-          <div><h4>适合 18+ 周岁, 游学行程 3 个月</h4></div>
-          <div><p v-html="item.description"></p></div>
+          <div>
+            <h3 v-html="item.name"></h3>
+          </div>
+          <div>
+            <h4>适合 18+ 周岁, 游学行程 3 个月</h4>
+          </div>
+          <div>
+            <p v-html="item.description"></p>
+          </div>
           <div>
             <p>
               目的地: <span style="color: #888">{{ item.photo.area }}</span>
@@ -398,6 +441,12 @@ export default {
     this.queryProject(9432);
     this.queryProject(9411);
   },
+  mounted() {
+    var map = new BMap.Map("container"); // 创建地图实例120.894277, 31.446341
+    var point = new BMap.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+    map.centerAndZoom(point, 18);
+    map.enableScrollWheelZoom(true);
+  },
 };
 </script>
 <style>
@@ -458,10 +507,11 @@ export default {
   padding: 1em 1.5em;
   text-align: center;
   background-color: #eee;
-  transition: all .4s;
+  transition: all 0.4s;
 }
-.student-wrapper:hover{
-  box-shadow: #ccc 0px 0px 15px 5px;
+.student-wrapper:hover {
+  box-shadow: #ccc 0px 7px 15px 5px;
+  transform: translateY(-5px);
 }
 .circled-img {
   width: 8em;
