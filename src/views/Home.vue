@@ -107,7 +107,7 @@
         <p>幽默、分享、交际、协作、沟通</p>
       </div>
       <div class="detail-wrapper">
-        <el-row :gutter="1">
+        <!-- <el-row :gutter="1">
           <el-col
             :span="5"
             v-for="item in projects9432.filter(e=>{return e.status='正常'})"
@@ -120,7 +120,18 @@
             ></el-image>
             {{ item }}
           </el-col>
-        </el-row>
+        </el-row> -->
+        <div
+          v-for="item in projects9432"
+          :key="item.id"
+          class="detail-pic-wall"
+        >
+          <el-image
+            :src="item.photo"
+            alt="加载失败"
+            style="width:100%;height:100%"
+          ></el-image>
+        </div>
         <div>
 
         </div>
@@ -432,6 +443,14 @@ export default {
       if ((t /= d / 2) < 1) return (c / 2) * t * t + b;
       return (-c / 2) * (--t * (t - 2) - 1) + b;
     },
+    // 随机定位、旋转精彩瞬间照片墙里的内容
+    putPic2Wall(picArr) {
+      picArr.forEach((element) => {
+        element.style.top = 10 + (Math.random() * 100) / 2.5 + "%";
+        element.style.left = 30 + (Math.random() * 100) / 2.5 + "%";
+        element.style.boxShadow = "0 0 10px 0";
+      });
+    },
   },
   created() {
     this.queryProject(9441);
@@ -442,10 +461,12 @@ export default {
     this.queryProject(9411);
   },
   mounted() {
-    var map = new BMap.Map("container"); // 创建地图实例120.894277, 31.446341
-    var point = new BMap.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+    let map = new BMap.Map("container"); // 创建地图实例120.894277, 31.446341
+    let point = new BMap.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
     map.centerAndZoom(point, 18);
     map.enableScrollWheelZoom(true);
+    let picArr = [...document.getElementsByClassName("detail-pic-wall")];
+    this.putPic2Wall(picArr);
   },
 };
 </script>
@@ -465,6 +486,13 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-top: 3em;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 6rem);
+}
+.detail-pic-wall {
+  position: absolute;
+  display: inline-block;
 }
 .content-title {
   text-align: center;
