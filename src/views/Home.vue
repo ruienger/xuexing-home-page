@@ -563,4 +563,7 @@ export default {
 .el-input {
   width: 40em;
 }
+#container {
+  width: 46%;
+}
 </style>
