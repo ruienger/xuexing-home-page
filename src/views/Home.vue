@@ -360,6 +360,7 @@ export default {
       backPosition: 0,
       interval: null,
       dialogVisible: false,
+      map: {},
     };
   },
   computed: {
@@ -392,6 +393,15 @@ export default {
       });
     },
   },
+  // watch: {
+  //   map: {
+  //     deep: true,
+  //     handler() {
+  //       let point = new BMapGL.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+  //       this.map.centerAndZoom(point, 18);
+  //     },
+  //   },
+  // },
   components: {
     headNavBar,
     cusFooter,
@@ -461,10 +471,44 @@ export default {
     this.queryProject(9411);
   },
   mounted() {
-    let map = new BMap.Map("container"); // 创建地图实例120.894277, 31.446341
-    let point = new BMap.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
-    map.centerAndZoom(point, 18);
-    map.enableScrollWheelZoom(true);
+    this.map = new BMapGL.Map("container"); // 创建地图实例120.894277, 31.446341
+    let point = new BMapGL.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+    this.map.centerAndZoom(point, 18);
+    //定义一个控件类
+    function backController() {
+      this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+      this.defaultOffset = new BMapGL.Size(20, 20);
+    }
+    //通过JavaScript的prototype属性继承于BMap.Control
+    backController.prototype = new BMapGL.Control();
+
+    //自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
+    //在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
+    backController.prototype.initialize = function (map) {
+      //创建一个dom元素
+      var div = document.createElement("div");
+      //添加文字说明
+      div.appendChild(document.createTextNode("回到初始位置"));
+      // 设置样式
+      div.style.cursor = "pointer";
+      div.style.padding = "7px 10px";
+      div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+      div.style.borderRadius = "5px";
+      div.style.backgroundColor = "white";
+      // 绑定事件,点击一次放大两级
+      div.onclick = function (e) {
+        map.centerAndZoom(point, 18);
+      };
+      // 添加DOM元素到地图中
+      map.getContainer().appendChild(div);
+      // 将DOM元素返回
+      return div;
+    };
+    //创建控件元素
+    var myZoomCtrl = new backController();
+    //添加到地图中
+    this.map.addControl(myZoomCtrl);
+    this.map.enableScrollWheelZoom(true);
     let picArr = [...document.getElementsByClassName("detail-pic-wall")];
     this.putPic2Wall(picArr);
   },
