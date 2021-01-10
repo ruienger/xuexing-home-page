@@ -24,7 +24,7 @@
           <div><p v-html="project.description"></p></div>
           <div>
             <p>
-              目的地: <span style="color: #888">{{ project.photo.area }}</span>
+              目的地: <span style="color: #888">{{ project.photo.area[0] + " " + project.photo.area[1] }}</span>
             </p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export default {
       address: {},
       rules: {
         name: [
-          { required: true, message: "请输入您的姓名", trigger: "blur" },
+          { required: true, message: "请输入您的姓名", trigger: "change" },
           {
             min: 2,
             max: 20,

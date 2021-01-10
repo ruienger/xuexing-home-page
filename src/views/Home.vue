@@ -451,8 +451,8 @@ export default {
   font-weight: bold;
 }
 .student-wrapper {
-  height: 21em;
-  width: 10em;
+  height: 22em;
+  width: 14em;
   border-radius: 1em;
   overflow: hidden;
   padding: 1em 1.5em;
