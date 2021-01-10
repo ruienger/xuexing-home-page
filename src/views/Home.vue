@@ -23,25 +23,21 @@
             alt=""
           />
         </div>
-        <div style="
+        <div
+          style="
             display: flex;
             justify-content: space-around;
             flex-direction: column;
-          ">
+          "
+        >
           <h4 style="color: rgb(187, 70, 70)">关于我们</h4>
           <div>
-            <h2
-              v-html="title"
-              style="font-weight: 500"
-            ></h2>
+            <h2 v-html="title" style="font-weight: 500"></h2>
           </div>
           <div>
             <p v-html="desc"></p>
           </div>
-          <div
-            class="conetnt-btn"
-            @click="scroll2Loc(7)"
-          >联系我们</div>
+          <div class="conetnt-btn" @click="scroll2Loc(7)">联系我们</div>
         </div>
       </div>
     </div>
@@ -55,7 +51,9 @@
       </div>
       <div class="detail-wrapper">
         <div
-          v-for="item in projectsArr.slice(0, 3)"
+          v-for="item in projectsArr.filter((e) => {
+          return e.status == '正常';
+        }).slice(0, 3)"
           :key="item.id"
           class="project-wrapper"
         >
@@ -74,7 +72,10 @@
           </div>
           <div>
             <p>
-              目的地: <span style="color: #888">{{ item.photo.area[0]+' '+item.photo.area[1] }}</span>
+              目的地:
+              <span style="color: #888">{{
+                item.photo.area[0] + " " + item.photo.area[1]
+              }}</span>
             </p>
           </div>
           <div style="display: flex">
@@ -96,9 +97,11 @@
         </div>
       </div>
       <h4
-        style="text-align:center;padding:15px 0"
+        style="text-align: center; padding: 15px 0"
         @click="dialogVisible = true"
-      >查看更多</h4>
+      >
+        查看更多
+      </h4>
     </div>
     <!-- 精彩瞬间 9432-->
     <div class="content-wrapper">
@@ -121,19 +124,37 @@
             {{ item }}
           </el-col>
         </el-row> -->
-        <div
-          v-for="item in projects9432"
-          :key="item.id"
-          class="detail-pic-wall"
-        >
-          <el-image
-            :src="item.photo"
-            alt="加载失败"
-            style="width:100%;height:100%"
-          ></el-image>
-        </div>
         <div>
-
+          <el-row type="flex" justify="space-between" :gutter="2">
+            <el-col
+              :span="7"
+              v-for="item in projects9432.filter((e) => {
+          return e.status == '正常';
+        }).slice(0, 5)"
+              :key="item.id"
+            >
+              <el-image
+                :src="item.photo"
+                alt="加载失败"
+                style="width: 100%; height: 100%"
+              ></el-image>
+            </el-col>
+          </el-row>
+          <el-row type="flex" justify="space-around" :gutter="2">
+            <el-col
+              :span="7"
+              v-for="item in projects9432.filter((e) => {
+          return e.status == '正常';
+        }).slice(5, 10)"
+              :key="item.id"
+            >
+              <el-image
+                :src="item.photo"
+                alt="加载失败"
+                style="width: 100%; height: 100%"
+              ></el-image>
+            </el-col>
+          </el-row>
         </div>
       </div>
     </div>
@@ -146,14 +167,14 @@
       <div
         class="QA-wrapper"
         v-for="item in projects9440.filter((e) => {
-          return e.status == '正常'
+          return e.status == '正常';
         })"
         :key="item.id"
       >
         <p>Q. {{ item.name }}</p>
         <p>{{ item.description }}</p>
-        <br>
-        <br>
+        <br />
+        <br />
       </div>
     </div>
     <!-- 学生风采 9414-->
@@ -165,7 +186,9 @@
       <div class="detail-wrapper">
         <div
           class="student-wrapper"
-          v-for="item in projects9414"
+          v-for="item in projects9414.filter((e) => {
+          return e.status == '正常';
+        })"
           :key="item.id"
         >
           <el-image
@@ -192,10 +215,7 @@
         background-image: url('http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u103.png');
       "
     >
-      <div
-        class="content-title"
-        style="color: #fff"
-      >
+      <div class="content-title" style="color: #fff">
         <h2>游学流程</h2>
         <p style="color: #fff">
           艺术陶冶、人文积累、审美培训、兴趣开发、思维锤炼
@@ -208,25 +228,25 @@
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u113.png"
           ></el-image>
         </div>
-        <div style="background-color: #fff; padding-left: 1.3em">
+        <div class="flow-wrapper">
           <el-image
             style="width: 160px; height: 254px"
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u114.png"
           ></el-image>
         </div>
-        <div style="background-color: #fff; padding-left: 1.3em">
+        <div class="flow-wrapper">
           <el-image
             style="width: 160px; height: 254px"
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u115.png"
           ></el-image>
         </div>
-        <div style="background-color: #fff; padding-left: 1.3em">
+        <div class="flow-wrapper">
           <el-image
             style="width: 160px; height: 254px"
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u116.png"
           ></el-image>
         </div>
-        <div style="background-color: #fff; padding-left: 1.3em">
+        <div class="flow-wrapper">
           <el-image
             style="width: 160px; height: 254px"
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u117.png"
@@ -242,11 +262,7 @@
       </div>
       <div class="detail-wrapper">
         <div class="form-wrapper">
-          <el-form
-            label-position="top"
-            label-width="6em"
-            :model="form"
-          >
+          <el-form label-position="top" label-width="6em" :model="form">
             <el-form-item>
               <el-input
                 v-model="form.realname"
@@ -288,15 +304,13 @@
     <cusFooter @linkClickded="scroll2Loc($event)"></cusFooter>
     <!-- 项目详情对应的 模态框 -->
 
-    <el-dialog
-      :visible.sync="dialogVisible"
-      width="90%"
-      title="所有可报名项目"
-    >
+    <el-dialog :visible.sync="dialogVisible" width="90%" title="所有可报名项目">
       <el-row :gutter="1">
         <el-col
           :span="7"
-          v-for="item in projectsArr"
+          v-for="item in projectsArr.filter((e) => {
+          return e.status == '正常';
+        })"
           :key="item.id"
           class="project-wrapper"
         >
@@ -315,7 +329,10 @@
           </div>
           <div>
             <p>
-              目的地: <span style="color: #888">{{ item.photo.area }}</span>
+              目的地:
+              <span style="color: #888">{{
+                item.photo.area[0] + " " + item.photo.area[1]
+              }}</span>
             </p>
           </div>
           <div style="display: flex">
@@ -375,7 +392,7 @@ export default {
     // 头部导航栏的图片列表
     imgList() {
       return this.projects9441.filter((ele) => {
-        return ele.status == "已完成";
+        return ele.status == "正常";
       });
     },
     // 关于我们的描述信息
@@ -594,6 +611,7 @@ export default {
 .flow-wrapper {
   background-color: #fff;
   padding: 0.8em 0 0.8em 1.3em;
+  height: 80%;
 }
 .project-wrapper > div {
   margin-top: 1em;

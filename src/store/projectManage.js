@@ -83,6 +83,7 @@ const actions = {
       if (id == 9411) {
         res.forEach(element => {
           if (element.photo) {
+            console.log(JSON.parse(element.photo))
             if (JSON.parse(element.photo)) {
               element.photo = JSON.parse(element.photo)
             }
