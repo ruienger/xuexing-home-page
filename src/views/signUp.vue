@@ -137,12 +137,12 @@ export default {
     };
     return {
       customer: {
-        realname: "茄子",
-        telephone: "13455667788",
-        province: "江苏",
-        city: "苏州",
-        area: "昆山",
-        address: "祖冲之中路",
+        realname: "",
+        telephone: "",
+        province: "",
+        city: "",
+        area: "",
+        address: "",
       },
       content: "",
       address: {},
