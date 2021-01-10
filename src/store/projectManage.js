@@ -82,8 +82,7 @@ const actions = {
     }, (res) => {
       if (id == 9411) {
         res.forEach(element => {
-          console.log(element)
-          if(element.photo){
+          if (element.photo) {
             if (JSON.parse(element.photo)) {
               element.photo = JSON.parse(element.photo)
             }
@@ -144,7 +143,7 @@ const actions = {
                   isOrigin: true
                 }, (address, isOrigin) => {
                   // 拿到地址之后获取 id，将 地址 id 和 用户 id 与 project 一并新建一个订单
-                  saveOrder(cus.id, address.id,  project,content, (m) => {
+                  saveOrder(cus.id, address.id, project, content, (m) => {
                     MessageBox.alert(m, '提示')
                   })
                 })
@@ -262,23 +261,23 @@ function finder({
   isOrigin
 }, callback) {
   get ? queryByTarget(urlFind, target, (res) => {
-      // 找到的话
-      if (res[0]) {
-        callback(res[0], isOrigin)
-      } else {
-        // 没找到那就新增然后重新找
-        saveOrUpdate(urlSave, data, (res) => {
-          finder({
-            urlFind,
-            urlSave,
-            target,
-            data,
-            get,
-            isOrigin: false
-          }, callback)
-        })
-      }
-    }) :
+    // 找到的话
+    if (res[0]) {
+      callback(res[0], isOrigin)
+    } else {
+      // 没找到那就新增然后重新找
+      saveOrUpdate(urlSave, data, (res) => {
+        finder({
+          urlFind,
+          urlSave,
+          target,
+          data,
+          get,
+          isOrigin: false
+        }, callback)
+      })
+    }
+  }) :
     queryPage(urlFind, target, (res) => {
       // 找到的话
       if (res.list[0]) {
@@ -308,23 +307,23 @@ function finderArr({
   isOrigin
 }, callback) {
   get ? queryByTarget(urlFind, target, (res) => {
-      // 找到的话
-      if (res) {
-        callback(res, isOrigin)
-      } else {
-        // 没找到那就新增然后重新找
-        saveOrUpdate(urlSave, data, (res) => {
-          finder({
-            urlFind,
-            urlSave,
-            target,
-            data,
-            get,
-            isOrigin: false
-          }, callback)
-        })
-      }
-    }) :
+    // 找到的话
+    if (res) {
+      callback(res, isOrigin)
+    } else {
+      // 没找到那就新增然后重新找
+      saveOrUpdate(urlSave, data, (res) => {
+        finder({
+          urlFind,
+          urlSave,
+          target,
+          data,
+          get,
+          isOrigin: false
+        }, callback)
+      })
+    }
+  }) :
     queryPage(urlFind, target, (res) => {
       // 找到的话
       if (res.list) {
@@ -383,9 +382,6 @@ function saveOrder(cusId, addId, project, content, callback) {
         get: true,
         isOrigin: true
       }, (res) => {
-        console.log(cusId)
-        console.log(content)
-        console.log(res)
         saveOrUpdate('comment/saveOrUpdate', {
           orderId: res.orderId,
           cusId,

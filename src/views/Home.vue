@@ -23,17 +23,25 @@
             alt=""
           />
         </div>
-        <div
-          style="
+        <div style="
             display: flex;
             justify-content: space-around;
             flex-direction: column;
-          "
-        >
+          ">
           <h4 style="color: rgb(187, 70, 70)">关于我们</h4>
-          <div><h2 v-html="title" style="font-weight: 500"></h2></div>
-          <div><p v-html="desc"></p></div>
-          <div class="conetnt-btn" @click="scroll2Loc(7)">联系我们</div>
+          <div>
+            <h2
+              v-html="title"
+              style="font-weight: 500"
+            ></h2>
+          </div>
+          <div>
+            <p v-html="desc"></p>
+          </div>
+          <div
+            class="conetnt-btn"
+            @click="scroll2Loc(7)"
+          >联系我们</div>
         </div>
       </div>
     </div>
@@ -55,9 +63,15 @@
             :src="item.photo.img || '404'"
             style="width: 22em; height: 16em"
           ></el-image>
-          <div><h3 v-html="item.name"></h3></div>
-          <div><h4>适合 18+ 周岁, 游学行程 3 个月</h4></div>
-          <div><p v-html="item.description"></p></div>
+          <div>
+            <h3 v-html="item.name"></h3>
+          </div>
+          <div>
+            <h4>适合 18+ 周岁, 游学行程 3 个月</h4>
+          </div>
+          <div>
+            <p v-html="item.description"></p>
+          </div>
           <div>
             <p>
               目的地: <span style="color: #888">{{ item.photo.area[0]+' '+item.photo.area[1] }}</span>
@@ -81,7 +95,10 @@
           </div>
         </div>
       </div>
-      <h4 style="text-align:center;padding:15px 0" @click="dialogVisible = true">查看更多</h4>
+      <h4
+        style="text-align:center;padding:15px 0"
+        @click="dialogVisible = true"
+      >查看更多</h4>
     </div>
     <!-- 精彩瞬间 9432-->
     <div class="content-wrapper">
@@ -90,13 +107,33 @@
         <p>幽默、分享、交际、协作、沟通</p>
       </div>
       <div class="detail-wrapper">
-        <el-row :gutter="1">
-          <el-col :span="5" v-for="item in projects9432.filter(e=>{return e.status='正常'})" :key="item.id">
-            <el-image :src="item.photo" alt="加载失败" style="width:100%;height:100%"></el-image>
+        <!-- <el-row :gutter="1">
+          <el-col
+            :span="5"
+            v-for="item in projects9432.filter(e=>{return e.status='正常'})"
+            :key="item.id"
+          >
+            <el-image
+              :src="item.photo"
+              alt="加载失败"
+              style="width:100%;height:100%"
+            ></el-image>
+            {{ item }}
           </el-col>
-        </el-row>
+        </el-row> -->
+        <div
+          v-for="item in projects9432"
+          :key="item.id"
+          class="detail-pic-wall"
+        >
+          <el-image
+            :src="item.photo"
+            alt="加载失败"
+            style="width:100%;height:100%"
+          ></el-image>
+        </div>
         <div>
-          
+
         </div>
       </div>
     </div>
@@ -155,7 +192,10 @@
         background-image: url('http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u103.png');
       "
     >
-      <div class="content-title" style="color: #fff">
+      <div
+        class="content-title"
+        style="color: #fff"
+      >
         <h2>游学流程</h2>
         <p style="color: #fff">
           艺术陶冶、人文积累、审美培训、兴趣开发、思维锤炼
@@ -202,7 +242,11 @@
       </div>
       <div class="detail-wrapper">
         <div class="form-wrapper">
-          <el-form label-position="top" label-width="6em" :model="form">
+          <el-form
+            label-position="top"
+            label-width="6em"
+            :model="form"
+          >
             <el-form-item>
               <el-input
                 v-model="form.realname"
@@ -233,18 +277,22 @@
             提交
           </div>
         </div>
-        <div>
-          <img
+        <div id="container">
+          <!-- <img
             src="http://39.106.16.56/huangyy/youxue/images/%E9%A6%96%E9%A1%B5/u125.png"
             alt=""
-          />
+          /> -->
         </div>
       </div>
     </div>
     <cusFooter @linkClickded="scroll2Loc($event)"></cusFooter>
     <!-- 项目详情对应的 模态框 -->
-         
-    <el-dialog :visible.sync="dialogVisible" width="90%" title="所有可报名项目">
+
+    <el-dialog
+      :visible.sync="dialogVisible"
+      width="90%"
+      title="所有可报名项目"
+    >
       <el-row :gutter="1">
         <el-col
           :span="7"
@@ -256,9 +304,15 @@
             :src="item.photo.img || '404'"
             style="width: 22em; height: 16em"
           ></el-image>
-          <div><h3 v-html="item.name"></h3></div>
-          <div><h4>适合 18+ 周岁, 游学行程 3 个月</h4></div>
-          <div><p v-html="item.description"></p></div>
+          <div>
+            <h3 v-html="item.name"></h3>
+          </div>
+          <div>
+            <h4>适合 18+ 周岁, 游学行程 3 个月</h4>
+          </div>
+          <div>
+            <p v-html="item.description"></p>
+          </div>
           <div>
             <p>
               目的地: <span style="color: #888">{{ item.photo.area }}</span>
@@ -306,6 +360,7 @@ export default {
       backPosition: 0,
       interval: null,
       dialogVisible: false,
+      map: {},
     };
   },
   computed: {
@@ -338,6 +393,15 @@ export default {
       });
     },
   },
+  // watch: {
+  //   map: {
+  //     deep: true,
+  //     handler() {
+  //       let point = new BMapGL.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+  //       this.map.centerAndZoom(point, 18);
+  //     },
+  //   },
+  // },
   components: {
     headNavBar,
     cusFooter,
@@ -389,6 +453,14 @@ export default {
       if ((t /= d / 2) < 1) return (c / 2) * t * t + b;
       return (-c / 2) * (--t * (t - 2) - 1) + b;
     },
+    // 随机定位、旋转精彩瞬间照片墙里的内容
+    putPic2Wall(picArr) {
+      picArr.forEach((element) => {
+        element.style.top = 10 + (Math.random() * 100) / 2.5 + "%";
+        element.style.left = 30 + (Math.random() * 100) / 2.5 + "%";
+        element.style.boxShadow = "0 0 10px 0";
+      });
+    },
   },
   created() {
     this.queryProject(9441);
@@ -397,6 +469,48 @@ export default {
     this.queryProject(9440);
     this.queryProject(9432);
     this.queryProject(9411);
+  },
+  mounted() {
+    this.map = new BMapGL.Map("container"); // 创建地图实例120.894277, 31.446341
+    let point = new BMapGL.Point(120.89476588440564, 31.44573203521327); // 创建点坐标
+    this.map.centerAndZoom(point, 18);
+    //定义一个控件类
+    function backController() {
+      this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+      this.defaultOffset = new BMapGL.Size(20, 20);
+    }
+    //通过JavaScript的prototype属性继承于BMap.Control
+    backController.prototype = new BMapGL.Control();
+
+    //自定义控件必须实现自己的initialize方法，并且将控件的DOM元素返回
+    //在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
+    backController.prototype.initialize = function (map) {
+      //创建一个dom元素
+      var div = document.createElement("div");
+      //添加文字说明
+      div.appendChild(document.createTextNode("回到初始位置"));
+      // 设置样式
+      div.style.cursor = "pointer";
+      div.style.padding = "7px 10px";
+      div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+      div.style.borderRadius = "5px";
+      div.style.backgroundColor = "white";
+      // 绑定事件,点击一次放大两级
+      div.onclick = function (e) {
+        map.centerAndZoom(point, 18);
+      };
+      // 添加DOM元素到地图中
+      map.getContainer().appendChild(div);
+      // 将DOM元素返回
+      return div;
+    };
+    //创建控件元素
+    var myZoomCtrl = new backController();
+    //添加到地图中
+    this.map.addControl(myZoomCtrl);
+    this.map.enableScrollWheelZoom(true);
+    let picArr = [...document.getElementsByClassName("detail-pic-wall")];
+    this.putPic2Wall(picArr);
   },
 };
 </script>
@@ -416,6 +530,13 @@ export default {
   display: flex;
   justify-content: space-around;
   margin-top: 3em;
+  position: relative;
+  width: 100%;
+  height: calc(100% - 6rem);
+}
+.detail-pic-wall {
+  position: absolute;
+  display: inline-block;
 }
 .content-title {
   text-align: center;
@@ -458,10 +579,11 @@ export default {
   padding: 1em 1.5em;
   text-align: center;
   background-color: #eee;
-  transition: all .4s;
+  transition: all 0.4s;
 }
-.student-wrapper:hover{
-  box-shadow: #ccc 0px 0px 15px 5px;
+.student-wrapper:hover {
+  box-shadow: #ccc 0px 7px 15px 5px;
+  transform: translateY(-5px);
 }
 .circled-img {
   width: 8em;
@@ -484,5 +606,8 @@ export default {
 }
 .el-input {
   width: 40em;
+}
+#container {
+  width: 46%;
 }
 </style>
